@@ -1,5 +1,5 @@
 class FlashCardsController < ApplicationController
-  before_action :set_flash_card, only: %i[ show edit update destroy ]
+  before_action :set_flash_card, only: %i[ show destroy ]
 
   # GET /flash_cards or /flash_cards.json
   def index
@@ -15,10 +15,6 @@ class FlashCardsController < ApplicationController
     @flash_card = FlashCard.new
   end
 
-  # GET /flash_cards/1/edit
-  def edit
-  end
-
   # POST /flash_cards or /flash_cards.json
   def create
     @flash_card = FlashCard.new(flash_card_params)
@@ -29,19 +25,6 @@ class FlashCardsController < ApplicationController
         format.json { render :show, status: :created, location: @flash_card }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @flash_card.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /flash_cards/1 or /flash_cards/1.json
-  def update
-    respond_to do |format|
-      if @flash_card.update(flash_card_params)
-        format.html { redirect_to @flash_card, notice: "Flash card was successfully updated." }
-        format.json { render :show, status: :ok, location: @flash_card }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @flash_card.errors, status: :unprocessable_entity }
       end
     end
@@ -65,6 +48,6 @@ class FlashCardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def flash_card_params
-      params.expect(flash_card: [ :word, :definition ])
+      params.expect(flash_card: [ :word ])
     end
 end

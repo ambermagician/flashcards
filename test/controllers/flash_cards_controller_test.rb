@@ -17,25 +17,23 @@ class FlashCardsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create flash_card" do
     assert_difference("FlashCard.count") do
-      post flash_cards_url, params: { flash_card: { definition: @flash_card.definition, word: @flash_card.word } }
+      post flash_cards_url, params: { flash_card: { word: "cat" } }
     end
 
     assert_redirected_to flash_card_url(FlashCard.last)
   end
 
+  test "should not create flash_card with no wordnet definition" do
+    assert_no_difference("FlashCard.count") do
+      post flash_cards_url, params: { flash_card: { word: "nonexistentwordxyzabc" } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test "should show flash_card" do
     get flash_card_url(@flash_card)
     assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_flash_card_url(@flash_card)
-    assert_response :success
-  end
-
-  test "should update flash_card" do
-    patch flash_card_url(@flash_card), params: { flash_card: { definition: @flash_card.definition, word: @flash_card.word } }
-    assert_redirected_to flash_card_url(@flash_card)
   end
 
   test "should destroy flash_card" do
