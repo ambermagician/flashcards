@@ -65,6 +65,6 @@ class FlashCardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def flash_card_params
-      params.expect(flash_card: [ :word, :definition ])
+      params.expect(flash_card: [ :word ])
     end
 end
